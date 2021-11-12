@@ -1,0 +1,16 @@
+.RecordAudio {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border-radius: 50%;
+    width: 15rem;
+    height: 15rem;
+    background-color: white;
+    box-shadow: 0 0 10px 3px black;
+}
+
+.Mic {
+    width: 50%;
+    height: 100%;
+    color: #222222;
+}
