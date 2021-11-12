@@ -10,12 +10,10 @@ function App() {
   const [blobURL, setBlobURL] = useState("");
   const [skyLink, setSkyLink] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-
-  (async () => {
-    const skyClient = new SkynetClient();
-    const mySky = await skyClient.loadMySky("localhost:3000", {});
-    setLoggedIn(mySky.checkLogin())
-  })();
+  
+  const skyClient = new SkynetClient();
+  const mySky = skyClient.loadMySky("localhost:3000", {});
+  // setLoggedIn(mySky.checkLogin())
 
   navigator.getUserMedia({ audio: true },
     () => {
@@ -41,9 +39,15 @@ function App() {
         />
         <audio src={blobURL} controls="controls" />
         {blobURL !== "" ?
-          <UploadButton blobURL={blobURL} setSkyLink={setSkyLink} />
+          <UploadButton
+            blobURL={blobURL}
+            setSkyLink={setSkyLink}
+            skyClient={skyClient}
+            mySky={mySky}
+            loggedIn={loggedIn}
+          />
           : ""}
-        {skyLink !== "" ? <UploadButton /> : ""}
+        {skyLink !== "" ? skyLink : ""}
       </div>
     </div>
   );
