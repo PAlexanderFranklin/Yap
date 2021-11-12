@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MySky, SkynetClient } from 'skynet-js';
 import './App.css';
+import yapLogo from './images/YapLogo.png';
 import Recorder from 'react-mp3-recorder';
 import SkynetButtons from './Components/SkynetButtons';
 import UploadButton from './Components/UploadButton';
@@ -49,6 +50,7 @@ function App() {
           : ""}
         {skyLink !== "" ? skyLink : ""}
       </div>
+      <img src={yapLogo} />
     </div>
   );
 }
