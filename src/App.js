@@ -1,11 +1,21 @@
 import { useState } from 'react';
+import { MySky, SkynetClient } from 'skynet-js';
 import './App.css';
 import Recorder from 'react-mp3-recorder';
 import SkynetButtons from './Components/SkynetButtons';
+import UploadButton from './Components/UploadButton';
 
 function App() {
 
   const [blobURL, setBlobURL] = useState("");
+  const [skyLink, setSkyLink] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  (async () => {
+    const skyClient = new SkynetClient();
+    const mySky = await skyClient.loadMySky("localhost:3000", {});
+    setLoggedIn(mySky.checkLogin())
+  })();
 
   navigator.getUserMedia({ audio: true },
     () => {
@@ -20,6 +30,7 @@ function App() {
     <div className="App">
       <SkynetButtons />
       <div className="content">
+        Tap and hold to record.
         <Recorder 
           onRecordingComplete={(blob) => {
             setBlobURL(URL.createObjectURL(blob));
@@ -29,6 +40,10 @@ function App() {
           }}
         />
         <audio src={blobURL} controls="controls" />
+        {blobURL !== "" ?
+          <UploadButton blobURL={blobURL} setSkyLink={setSkyLink} />
+          : ""}
+        {skyLink !== "" ? <UploadButton /> : ""}
       </div>
     </div>
   );
