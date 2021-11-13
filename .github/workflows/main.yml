@@ -15,7 +15,7 @@ jobs:
           node-version: 16.x
 
       - run: npm install
-      - run: npm build
+      - run: npm run build
 
       - name: "Deploy to Skynet"
         uses: SkynetLabs/deploy-to-skynet-action@v2
