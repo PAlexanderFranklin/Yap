@@ -9,8 +9,8 @@ function UploadArea(props) {
     const { blob, uploaded, setUploaded } = props;
     const [skyLinkURL, setSkyLinkURL] = useState("");
 
-    const { client, mySky, dataDomain, fileSystem } = useContext(SkynetContext);
-
+    const { client} = useContext(SkynetContext);
+// , mySky, dataDomain, fileSystem 
     async function upload() {
         try {
             const fileName = new Date();

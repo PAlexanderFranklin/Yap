@@ -38,7 +38,7 @@ function App() {
             setUploaded={setUploaded}
           /> : ""}
         <SkynetButtons />
-        {/* <Navigation /> */}
+        <Navigation />
       </div>
     </div>
   );
