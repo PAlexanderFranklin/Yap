@@ -8,13 +8,7 @@ import UploadButton from './Components/UploadButton';
 
 function App() {
 
-  const [blobURL, setBlobURL] = useState("");
-  const [skyLink, setSkyLink] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
-  
-  const skyClient = new SkynetClient();
-  const mySky = skyClient.loadMySky("localhost:3000", {});
-  // setLoggedIn(mySky.checkLogin())
+  const [blob, setBlob] = useState("");
 
   navigator.getUserMedia({ audio: true },
     () => {
@@ -27,30 +21,23 @@ function App() {
 
   return (
     <div className="App">
-      <SkynetButtons />
       <div className="content">
+    <img src={yapLogo} />
         Tap and hold to record.
         <Recorder 
           onRecordingComplete={(blob) => {
-            setBlobURL(URL.createObjectURL(blob));
+            setBlob(blob);
           }}
           onRecordingError={(err) => {
             console.log("recording error", err)
           }}
         />
-        <audio src={blobURL} controls="controls" />
-        {blobURL !== "" ?
-          <UploadButton
-            blobURL={blobURL}
-            setSkyLink={setSkyLink}
-            skyClient={skyClient}
-            mySky={mySky}
-            loggedIn={loggedIn}
-          />
+        <audio src={blob} controls="controls" />
+        {blob !== "" ?
+          <UploadButton blob={blob} />
           : ""}
-        {skyLink !== "" ? skyLink : ""}
+        <SkynetButtons />
       </div>
-      <img src={yapLogo} />
     </div>
   );
 }

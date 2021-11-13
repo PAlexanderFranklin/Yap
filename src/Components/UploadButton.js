@@ -1,27 +1,35 @@
 import './UploadButton.css';
+import { MySky, SkynetClient } from 'skynet-js';
+import { FileSystemDAC } from "fs-dac-library";
+import { useState } from 'react';
 
 function UploadButton(props) {
 
-    const {blobURL, setSkyLink, SkyClient, mySky, loggedIn} = props;
+    const {blob} = props;
+    const [skyLink, setSkyLink] = useState("");
 
     async function upload() {
-        if (loggedIn) {
-            console.log("stuff");
+        const SkyClient = new SkynetClient("https://siasky.net");
+        const fileSystemDAC = new FileSystemDAC();
+        const mySky = await SkyClient.loadMySky("localhost:3000", {});
+        await mySky.loadDacs(fileSystemDAC);
+        try {
+            let audioFile = new File([blob], "audio.mp3");
+            let { skyLinkResponse } = await SkyClient.uploadFile(audioFile);
+            setSkyLink(skyLinkResponse);
         }
-        else {
-            try {
-                setSkyLink(await SkyClient.uploadFile(blobURL));
-            }
-            catch (error) {
-                console.log(error);
-            }
+        catch (error) {
+            console.log(error);
         }
     }
 
     return (
-        <button className="UploadButton" onClick={upload}>
-            Upload
-        </button>
+        <div>
+            <button className="UploadButton" onClick={upload}>
+                Upload
+            </button>
+            {skyLink !== "" ? skyLink : ""}
+        </div>
     );
 }
 
