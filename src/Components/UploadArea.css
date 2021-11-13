@@ -1,0 +1,9 @@
+.UploadButton {
+    width: 10rem;
+    height: 4rem;
+    font-size: 1.5rem;
+    background-color: #6ac174;
+    border: none;
+    border-radius: 0.1rem;
+    box-shadow: 1px 1px 4px 2px rgba(1, 1, 1, 0.8);
+}

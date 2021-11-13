@@ -1,28 +1,23 @@
 import { useState } from 'react';
-import { MySky, SkynetClient } from 'skynet-js';
 import './App.css';
 import yapLogo from './images/YapLogo.png';
 import Recorder from 'react-mp3-recorder';
 import SkynetButtons from './Components/SkynetButtons';
-import UploadButton from './Components/UploadButton';
+import UploadArea from './Components/UploadArea';
 
 function App() {
 
   const [blob, setBlob] = useState("");
 
   navigator.getUserMedia({ audio: true },
-    () => {
-      console.log('Permission Granted');
-    },
-    () => {
-      console.log('Permission Denied');
-    },
+    () => {},
+    () => {},
   );
 
   return (
     <div className="App">
       <div className="content">
-    <img src={yapLogo} />
+      <img src={yapLogo} alt="Yap Logo" />
         Tap and hold to record.
         <Recorder 
           onRecordingComplete={(blob) => {
@@ -32,10 +27,9 @@ function App() {
             console.log("recording error", err)
           }}
         />
-        <audio src={blob} controls="controls" />
-        {blob !== "" ?
-          <UploadButton blob={blob} />
-          : ""}
+        {blob !== "" ? <audio src={URL.createObjectURL(blob)}
+          controls="controls" /> : ""}
+        {blob !== "" ? <UploadArea blob={blob} /> : ""}
         <SkynetButtons />
       </div>
     </div>
