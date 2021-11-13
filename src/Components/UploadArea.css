@@ -1,9 +1,31 @@
 .UploadButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 10rem;
     height: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     background-color: #6ac174;
     border: none;
     border-radius: 0.1rem;
     box-shadow: 1px 1px 4px 2px rgba(1, 1, 1, 0.8);
+}
+
+.UploadButton:active {
+    background-color: #5eaa66;
+    box-shadow: 0 0 2px 1px rgba(1, 1, 1, 0.8);
+}
+
+.UploadArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

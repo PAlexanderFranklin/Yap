@@ -8,6 +8,7 @@ import UploadArea from './Components/UploadArea';
 function App() {
 
   const [blob, setBlob] = useState("");
+  const [uploaded, setUploaded] = useState(false);
 
   navigator.getUserMedia({ audio: true },
     () => {},
@@ -29,7 +30,11 @@ function App() {
         />
         {blob !== "" ? <audio src={URL.createObjectURL(blob)}
           controls="controls" /> : ""}
-        {blob !== "" ? <UploadArea blob={blob} /> : ""}
+        {blob !== "" ? 
+          <UploadArea blob={blob}
+            uploaded={uploaded}
+            setUploaded={setUploaded}
+          /> : ""}
         <SkynetButtons />
       </div>
     </div>

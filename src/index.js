@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { SkynetProvider } from './state/SkynetContext';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SkynetProvider>
+      <App />
+    </SkynetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
