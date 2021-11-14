@@ -25,7 +25,7 @@ function SkynetButtons() {
     return (
         <div className="SkynetButtons">
             { loginButton ?
-                <button onClick={mySky.requestLoginAccess}
+                <button onClick={() => {mySky.requestLoginAccess();}}
                     className="login_to_mysky"
                 >
                     Login to mySky
