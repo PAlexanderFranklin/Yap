@@ -23,22 +23,26 @@ function App() {
     <div className="App">
       <div className="content">
       <img src={yapLogo} alt="Yap Logo" className="logo" />
-        <p>Tap and hold to record.</p>
-        <Recorder 
-          onRecordingComplete={(blob) => {
-            setBlob(blob);
-            try {
-              setBlobURL(URL.createObjectURL(blob))
-            }
-            catch (error) {
-              console.log(error);
-            }
-            setUploaded(false);
-          }}
-          onRecordingError={(err) => {
-            console.log("recording error", err)
-          }}
-        />
+        <p>
+          Tap and hold below to record.
+        </p>
+        <div className="recorder_container">
+          <Recorder 
+            onRecordingComplete={(blob) => {
+              setBlob(blob);
+              try {
+                setBlobURL(URL.createObjectURL(blob))
+              }
+              catch (error) {
+                console.log(error);
+              }
+              setUploaded(false);
+            }}
+            onRecordingError={(err) => {
+              console.log("recording error", err)
+            }}
+          />
+        </div>
         {blobURL !== "" ? 
           <UploadArea
             blob={blob}
@@ -52,12 +56,12 @@ function App() {
           mySkyReload={mySkyReload}
           setMySkyReload={setMySkyReload}
         />
+      </div>
         <Navigation
           mySkyReload={mySkyReload}
           localSkyLinks={localSkyLinks}
           setLocalSkyLinks={setLocalSkyLinks}
         />
-      </div>
     </div>
   );
 }

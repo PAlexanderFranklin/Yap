@@ -38,7 +38,7 @@ function SkynetButtons(props) {
             href="https://homescreen.hns.siasky.net/#/skylink/AQCrn58EwIKUsZ94r9bXOGauv-KapM77N1wT62jYAXWovw"
             rel="noreferrer"
             >
-                <img src={AddToHomescreen} alt="Add To Skynet Homescreen" />
+                <img src={AddToHomescreen} alt="Add To Skynet Homescreen" className="homescreen" />
             </a>
         </div>
     );

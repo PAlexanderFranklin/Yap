@@ -1,6 +1,38 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .content {
     display: flex;
     flex-direction: column;
-    min-height: 40rem;
+    padding: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    width: 20rem;
     align-items: center;
+    background-color: lightgray;
+    border-radius: 1rem;
+}
+
+p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
+    font-size: 1.25rem;
+    border-radius: 0.5rem;
+    background-color: #6ac174;
+}
+
+.recorder_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7rem;
+    width: 100%;
 }
