@@ -27,8 +27,9 @@ function UploadArea(props) {
             setLocalSkyLinks([...localSkyLinks, tempSkyLinkURL]);
             if (await mySky.checkLogin()) {
                 try {
-                    const skylinks = await mySky.getJSON(
-                        dataDomain + "/yaps.json").data.skylinks;
+                    let response = await mySky.getJSON(
+                        dataDomain + "/yaps.json");
+                    const skylinks = JSON.parse(response.data.skylinks);
                     await mySky.setJSON(
                         dataDomain + "/yaps.json",
                         {skylinks: JSON.stringify([...skylinks, tempSkyLink])}
