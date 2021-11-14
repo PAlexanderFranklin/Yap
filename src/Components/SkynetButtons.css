@@ -2,3 +2,18 @@
     top: 5rem;
     right: 10rem;
 }
+
+.login_to_mysky {
+    margin-right: 2rem;
+    min-height: 2rem;
+    min-width: 20rem;
+    background-color: #6ac174;
+    border: none;
+    border-radius: 0.1rem;
+    box-shadow: 1px 1px 4px 2px rgba(1, 1, 1, 0.8);
+}
+
+.login_to_mysky:active {
+    background-color: #5eaa66;
+    box-shadow: 0 0 2px 1px rgba(1, 1, 1, 0.8);
+}

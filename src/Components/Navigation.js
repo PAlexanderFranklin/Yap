@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './Navigation.css';
 import { SkynetContext } from '../state/SkynetContext';
 import Item from './Navigation/Item';
@@ -43,10 +43,25 @@ function Navigation(props) {
     stuff()
   }, [client, dataDomain, mySky, setLocalSkyLinks])
 
+  const [ itemArray, setItemArray ] = useState([]);
+  useEffect(() => {
+    try {
+      setItemArray(
+        localSkyLinks.map(
+          element => <Item key={element} skylink={element} />
+        )
+      );
+    }
+    catch (error) {
+      console.log(error);
+      console.log(localSkyLinks);
+    }
+  }, [localSkyLinks])
+
   return (
     <div className="Navigation">
       <div className="items">
-        {localSkyLinks.map(element => <Item key={element} skylink={element} />)}
+        {itemArray}
         <button className="UploadButton" onClick={reload}>
           Load audio from mySky
         </button>
