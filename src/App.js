@@ -37,11 +37,13 @@ function App() {
           <UploadArea blob={blob}
             uploaded={uploaded}
             setUploaded={setUploaded}
+            localSkyLinks={localSkyLinks}
             setLocalSkyLinks={setLocalSkyLinks}
           /> : ""}
         <SkynetButtons />
         <Navigation
           localSkyLinks={localSkyLinks}
+          setLocalSkyLinks={setLocalSkyLinks}
         />
       </div>
     </div>

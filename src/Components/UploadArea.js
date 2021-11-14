@@ -6,7 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function UploadArea(props) {
 
-    const { blob, uploaded, setUploaded, setLocalSkyLinks } = props;
+    const { blob, uploaded, setUploaded, localSkyLinks, setLocalSkyLinks } = props;
     const [skyLinkURL, setSkyLinkURL] = useState("");
 
     const { client, mySky, dataDomain } = useContext(SkynetContext);
@@ -21,25 +21,22 @@ function UploadArea(props) {
             );
             let response = await client.uploadFile(audioFile);
             const tempSkyLink = parseSkylink(response.skylink);
-            setSkyLinkURL(await client.getSkylinkUrl(tempSkyLink));
+            const tempSkyLinkURL = await client.getSkylinkUrl(tempSkyLink);
+            setSkyLinkURL(tempSkyLinkURL);
             setUploaded(true);
+            setLocalSkyLinks([...localSkyLinks, tempSkyLinkURL]);
             if (await mySky.checkLogin()) {
-                let data = await mySky.getJSON(
-                    dataDomain + "/yaps.json").data;
-                if (data == null) {
+                try {
+                    const skylinks = await mySky.getJSON(
+                        dataDomain + "/yaps.json").data.skylinks;
                     await mySky.setJSON(
                         dataDomain + "/yaps.json",
-                        {skylinks: []}
+                        {skylinks: [...skylinks, tempSkyLink]}
                     );
                 }
-                let response = await mySky.getJSON(
-                    dataDomain + "/yaps.json");
-                const skylinks = response.data.skylinks;
-                await mySky.setJSON(
-                    dataDomain + "/yaps.json",
-                    {skylinks: skylinks + tempSkyLink}
-                );
-                setLocalSkyLinks(skylinks + tempSkyLink);
+                catch (error) {
+                    console.log(error);
+                }
             }
         }
         catch (error) {
