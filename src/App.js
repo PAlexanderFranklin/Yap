@@ -34,7 +34,8 @@ function App() {
         {blob !== "" ? <audio src={URL.createObjectURL(blob)}
           controls="controls" /> : ""}
         {blob !== "" ? 
-          <UploadArea blob={blob}
+          <UploadArea
+            blob={blob}
             uploaded={uploaded}
             setUploaded={setUploaded}
             localSkyLinks={localSkyLinks}
@@ -42,8 +43,12 @@ function App() {
           /> : ""}
         <SkynetButtons />
         <Navigation
+          blob={blob}
+          setBlob={setBlob}
           localSkyLinks={localSkyLinks}
           setLocalSkyLinks={setLocalSkyLinks}
+          uploaded={uploaded}
+          setUploaded={setUploaded}
         />
       </div>
     </div>
