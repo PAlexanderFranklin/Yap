@@ -35,7 +35,10 @@ function UploadArea(props) {
                     );
                 }
                 catch (error) {
-                    console.log(error);
+                    await mySky.setJSON(
+                        dataDomain + "/yaps.json",
+                        {skylinks: [tempSkyLink]}
+                    );
                 }
             }
         }

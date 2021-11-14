@@ -2,4 +2,5 @@
 
 # Yap
 
-This is an app on Skynet.
+This skapp allows you to record audio and share it with your friends.
+If you are logged into MySky, it will save your recordings for later.
