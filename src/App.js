@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App">
       <div className="content">
-      <img src={yapLogo} alt="Yap Logo" />
+      <img src={yapLogo} alt="Yap Logo" className="logo" />
         Tap and hold to record.
         <Recorder 
           onRecordingComplete={(blob) => {
@@ -34,7 +34,8 @@ function App() {
         {blob !== "" ? <audio src={URL.createObjectURL(blob)}
           controls="controls" /> : ""}
         {blob !== "" ? 
-          <UploadArea blob={blob}
+          <UploadArea
+            blob={blob}
             uploaded={uploaded}
             setUploaded={setUploaded}
             localSkyLinks={localSkyLinks}
@@ -42,8 +43,12 @@ function App() {
           /> : ""}
         <SkynetButtons />
         <Navigation
+          blob={blob}
+          setBlob={setBlob}
           localSkyLinks={localSkyLinks}
           setLocalSkyLinks={setLocalSkyLinks}
+          uploaded={uploaded}
+          setUploaded={setUploaded}
         />
       </div>
     </div>
