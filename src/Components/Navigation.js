@@ -7,7 +7,7 @@ function Navigation(props) {
 
   const { localSkyLinks, setLocalSkyLinks } = props;
   const { client, mySky, dataDomain } = useContext(SkynetContext);
-  const { reload, setReload } = useState(false);
+  const [ reload, setReload ] = useState(false);
 
   useEffect(() => {
     async function stuff() {
@@ -42,7 +42,7 @@ function Navigation(props) {
     <div className="Navigation">
       <div className="items">
         {itemArray}
-        <button className="reload" onClick={() => {setReload(!reload)}}>
+        <button className="UploadButton" onClick={() => {setReload(!reload)}}>
           Load audio from mySky
         </button>
       </div>
