@@ -7,12 +7,14 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 function UploadArea(props) {
 
     const { blob, blobURL, uploaded, setUploaded, localSkyLinks, setLocalSkyLinks } = props;
-    const [skyLinkURL, setSkyLinkURL] = useState("");
+    const [ skyLinkURL, setSkyLinkURL ] = useState("");
+    const [ uploading, setUploading ] = useState(false);
 
     const { client, mySky, dataDomain } = useContext(SkynetContext);
     
     async function upload() {
         try {
+            setUploading(true);
             const fileName = new Date();
             const audioFile = new File(
                 [blob],
@@ -24,6 +26,7 @@ function UploadArea(props) {
             const tempSkyLinkURL = await client.getSkylinkUrl(tempSkyLink);
             setSkyLinkURL(tempSkyLinkURL);
             setUploaded(true);
+            setUploading(false);
             setLocalSkyLinks([...localSkyLinks, tempSkyLinkURL]);
             if (await mySky.checkLogin()) {
                 try {
@@ -54,12 +57,16 @@ function UploadArea(props) {
             <audio src={blobURL}
                 controls="controls"
             />
-            { !uploaded ?
+            { !uploaded ? (uploading ?
+                <button className="UploadButton">
+                    Uploading
+                </button>
+                :
                 <button className="UploadButton" onClick={upload}>
                     Upload
-                </button>
+                </button>)
                 : <div className="success">
-                    Your recording is uploaded at the link below! Click to copy.
+                    Your recording is uploaded at the link below. Click to copy.
                     <CopyToClipboard text={skyLinkURL}>
                         <textarea defaultValue={skyLinkURL} readOnly={true} />
                     </CopyToClipboard>
