@@ -43,20 +43,10 @@ function Navigation(props) {
     stuff()
   }, [client, dataDomain, mySky, setLocalSkyLinks])
 
-  let itemArray = "";
-  try {
-    itemArray = localSkyLinks.map(element => <Item key={element} skylink={element} />);
-  }
-  catch (error) {
-    console.log(error);
-    console.log(localSkyLinks);
-    itemArray = "";
-  }
-
   return (
     <div className="Navigation">
       <div className="items">
-        {itemArray}
+        {localSkyLinks.map(element => <Item key={element} skylink={element} />)}
         <button className="UploadButton" onClick={reload}>
           Load audio from mySky
         </button>
