@@ -43,12 +43,8 @@ function App() {
           /> : ""}
         <SkynetButtons />
         <Navigation
-          blob={blob}
-          setBlob={setBlob}
           localSkyLinks={localSkyLinks}
           setLocalSkyLinks={setLocalSkyLinks}
-          uploaded={uploaded}
-          setUploaded={setUploaded}
         />
       </div>
     </div>

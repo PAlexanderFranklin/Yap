@@ -5,12 +5,23 @@ import Item from './Navigation/Item';
 
 function Navigation(props) {
 
-  const { localSkyLinks, setLocalSkyLinks, blob, setBlob, uploaded, setUploaded } = props;
+  const { localSkyLinks, setLocalSkyLinks } = props;
   const { client, mySky, dataDomain } = useContext(SkynetContext);
   
   async function reload() {
-    setBlob(blob);
-    setUploaded(uploaded);
+    try {
+      let response = await mySky.getJSON(
+        dataDomain + "/yaps.json");
+      let skylinks = JSON.parse(response.data.skylinks);
+      let newSkylinks = [];
+      skylinks.forEach(async (element) => {
+        newSkylinks.push(await client.getSkylinkUrl(element));
+      });
+      setLocalSkyLinks(newSkylinks);
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
