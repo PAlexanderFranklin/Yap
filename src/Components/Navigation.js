@@ -24,7 +24,7 @@ function Navigation(props) {
       }
     }
     stuff();
-  }, [dataDomain, mySky, setLocalSkyLinks])
+  }, [client, dataDomain, mySky, setLocalSkyLinks])
 
   let itemArray = "";
   try {
