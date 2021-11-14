@@ -12,7 +12,7 @@ function App() {
   const [uploaded, setUploaded] = useState(false);
   const [localSkyLinks, setLocalSkyLinks] = useState([]);
 
-  navigator.getUserMedia({ audio: true },
+  navigator.mediaDevices.getUserMedia({ audio: true },
     () => {},
     () => {},
   );

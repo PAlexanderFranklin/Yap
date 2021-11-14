@@ -1,5 +1,5 @@
 import './SkynetButtons.css';
-import AddToHomescreen from '../images/Add To Homescreen.svg';
+import AddToHomescreen from '../images/AddToHomescreen.svg';
 
 function SkynetButtons() {
     return (
