@@ -9,6 +9,7 @@ import Navigation from './Components/Navigation';
 function App() {
 
   const [blob, setBlob] = useState("");
+  const [blobURL, setBlobURL] = useState("");
   const [uploaded, setUploaded] = useState(false);
   const [localSkyLinks, setLocalSkyLinks] = useState([]);
 
@@ -21,21 +22,26 @@ function App() {
     <div className="App">
       <div className="content">
       <img src={yapLogo} alt="Yap Logo" className="logo" />
-        Tap and hold to record.
+        <p>Tap and hold to record.</p>
         <Recorder 
           onRecordingComplete={(blob) => {
             setBlob(blob);
+            try {
+              setBlobURL(URL.createObjectURL(blob))
+            }
+            catch (error) {
+              console.log(error);
+            }
             setUploaded(false);
           }}
           onRecordingError={(err) => {
             console.log("recording error", err)
           }}
         />
-        {blob !== "" ? <audio src={URL.createObjectURL(blob)}
-          controls="controls" /> : ""}
-        {blob !== "" ? 
+        {blobURL !== "" ? 
           <UploadArea
             blob={blob}
+            blobURL={blobURL}
             uploaded={uploaded}
             setUploaded={setUploaded}
             localSkyLinks={localSkyLinks}

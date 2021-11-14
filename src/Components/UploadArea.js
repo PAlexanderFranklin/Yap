@@ -6,7 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function UploadArea(props) {
 
-    const { blob, uploaded, setUploaded, localSkyLinks, setLocalSkyLinks } = props;
+    const { blob, blobURL, uploaded, setUploaded, localSkyLinks, setLocalSkyLinks } = props;
     const [skyLinkURL, setSkyLinkURL] = useState("");
 
     const { client, mySky, dataDomain } = useContext(SkynetContext);
@@ -51,6 +51,9 @@ function UploadArea(props) {
 
     return (
         <div className="UploadArea">
+            <audio src={blobURL}
+                controls="controls"
+            />
             { !uploaded ?
                 <button className="UploadButton" onClick={upload}>
                     Upload

@@ -22,6 +22,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 2rem;
+}
+
+.UploadArea audio{
+    margin-bottom: 1rem;
+}
+
+.UploadArea textarea{
+    margin-top: 1rem;
 }
 
 .success {
