@@ -11,6 +11,7 @@ function App() {
   const [blob, setBlob] = useState("");
   const [blobURL, setBlobURL] = useState("");
   const [uploaded, setUploaded] = useState(false);
+  const [mySkyReload, setMySkyReload] = useState(false);
   const [localSkyLinks, setLocalSkyLinks] = useState([]);
 
   navigator.mediaDevices.getUserMedia({ audio: true },
@@ -47,8 +48,12 @@ function App() {
             localSkyLinks={localSkyLinks}
             setLocalSkyLinks={setLocalSkyLinks}
           /> : ""}
-        <SkynetButtons />
+        <SkynetButtons
+          mySkyReload={mySkyReload}
+          setMySkyReload={setMySkyReload}
+        />
         <Navigation
+          mySkyReload={mySkyReload}
           localSkyLinks={localSkyLinks}
           setLocalSkyLinks={setLocalSkyLinks}
         />

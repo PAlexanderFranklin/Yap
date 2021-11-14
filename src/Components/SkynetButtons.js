@@ -3,8 +3,9 @@ import AddToHomescreen from '../images/AddToHomescreen.svg';
 import { SkynetContext } from '../state/SkynetContext';
 import { useContext, useEffect, useState } from 'react';
 
-function SkynetButtons() {
+function SkynetButtons(props) {
 
+    const { mySkyReload, setMySkyReload } = props;
     const { mySky } = useContext(SkynetContext);
     const [ loginButton, setloginButton ] = useState(false);
 
@@ -20,12 +21,12 @@ function SkynetButtons() {
             }
         }
         stuff()
-    }, [mySky])
+    }, [mySky, mySkyReload])
 
     return (
         <div className="SkynetButtons">
             { loginButton ?
-                <button onClick={() => {mySky.requestLoginAccess();}}
+                <button onClick={() => {mySky.requestLoginAccess().then(setMySkyReload(!mySkyReload));}}
                     className="login_to_mysky"
                 >
                     Login to mySky
