@@ -10,6 +10,7 @@ function App() {
 
   const [blob, setBlob] = useState("");
   const [uploaded, setUploaded] = useState(false);
+  const [localSkyLinks, setLocalSkyLinks] = useState([]);
 
   navigator.getUserMedia({ audio: true },
     () => {},
@@ -36,9 +37,12 @@ function App() {
           <UploadArea blob={blob}
             uploaded={uploaded}
             setUploaded={setUploaded}
+            setLocalSkyLinks={setLocalSkyLinks}
           /> : ""}
         <SkynetButtons />
-        <Navigation />
+        <Navigation
+          localSkyLinks={localSkyLinks}
+        />
       </div>
     </div>
   );

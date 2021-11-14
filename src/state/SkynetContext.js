@@ -4,7 +4,7 @@ import { SkynetClient } from 'skynet-js';
 // To import DAC, uncomment here, and 2 spots below.
 // import { ContentRecordDAC } from '@skynetlabs/content-record-library';
 // import { UserProfileDAC } from '@skynethub/userprofile-library';
-import { FileSystemDAC } from "fs-dac-library";
+// import { FileSystemDAC } from "fs-dac-library";
 
 const SkynetContext = createContext(undefined);
 
@@ -20,10 +20,10 @@ const client = new SkynetClient(portal);
 // const contentRecord = new ContentRecordDAC();
 const contentRecord = null;
 const userProfile = null;
-const fileSystem = new FileSystemDAC();
+const fileSystem = null;
 
 const dataDomain =
-  window.location.hostname === 'localhost' ? 'localhost' : 'appName.hns';
+  window.location.hostname === 'localhost' ? 'localhost' : '040an7sv0j08555hjtsavlmn71jatfv2jaictupnbg9umq6o05qqhfo';
 
 const SkynetProvider = ({ children }) => {
   const [skynetState, setSkynetState] = useState({
@@ -50,7 +50,7 @@ const SkynetProvider = ({ children }) => {
         // Uncomment line below to load DACs
         // await mySky.loadDacs(contentRecord);
         // await mySky.loadDacs(userProfile);
-        await mySky.loadDacs(fileSystem);
+        // await mySky.loadDacs(fileSystem);
 
         // replace mySky in state object
         setSkynetState({ ...skynetState, mySky });

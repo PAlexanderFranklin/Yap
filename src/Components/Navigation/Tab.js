@@ -1,6 +1,6 @@
 import './Tab.css';
 
-function Tab() {
+function Tab(props) {
   return (
     <div className="Tab">
     </div>

@@ -6,11 +6,11 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function UploadArea(props) {
 
-    const { blob, uploaded, setUploaded } = props;
+    const { blob, uploaded, setUploaded, setLocalSkyLinks } = props;
     const [skyLinkURL, setSkyLinkURL] = useState("");
 
-    const { client} = useContext(SkynetContext);
-// , mySky, dataDomain, fileSystem 
+    const { client, mySky, dataDomain } = useContext(SkynetContext);
+    
     async function upload() {
         try {
             const fileName = new Date();
@@ -19,23 +19,33 @@ function UploadArea(props) {
                 fileName.toLocaleString() + ".mp3",
                 {type: blob.type}
             );
-            // if (await mySky.checkLogin()) {
-            // }
-            // else {
-                const response = await client.uploadFile(audioFile);
-                const tempSkyLink = parseSkylink(response.skylink);
-                setSkyLinkURL(await client.getSkylinkUrl(tempSkyLink));
-            // }
+            let response = await client.uploadFile(audioFile);
+            const tempSkyLink = parseSkylink(response.skylink);
+            setSkyLinkURL(await client.getSkylinkUrl(tempSkyLink));
             setUploaded(true);
+            if (await mySky.checkLogin()) {
+                let data = await mySky.getJSON(
+                    dataDomain + "/yaps.json").data;
+                if (data == null) {
+                    await mySky.setJSON(
+                        dataDomain + "/yaps.json",
+                        {skylinks: []}
+                    );
+                }
+                let response = await mySky.getJSON(
+                    dataDomain + "/yaps.json");
+                const skylinks = response.data.skylinks;
+                await mySky.setJSON(
+                    dataDomain + "/yaps.json",
+                    {skylinks: skylinks + tempSkyLink}
+                );
+                setLocalSkyLinks(skylinks + tempSkyLink);
+            }
         }
         catch (error) {
             console.log(error);
         }
     }
-
-    // async function testStuff() {
-    //     console.log(await fileSystem.getDirectoryIndex(dataDomain + "/yaps"));
-    // }
 
     return (
         <div className="UploadArea">
@@ -44,16 +54,12 @@ function UploadArea(props) {
                     Upload
                 </button>
                 : <div className="success">
-                    Your recording is uploaded at the link below!
-                    <textarea defaultValue={skyLinkURL} readOnly={true} />
-                    <CopyToClipboard text={skyLinkURL} className="UploadButton">
-                        <span>Copy</span>
+                    Your recording is uploaded at the link below! Click to copy.
+                    <CopyToClipboard text={skyLinkURL}>
+                        <textarea defaultValue={skyLinkURL} readOnly={true} />
                     </CopyToClipboard>
                 </div>
             }
-            {/* <button className="UploadButton" onClick={testStuff}>
-                Test Stuff
-            </button> */}
         </div>
     );
 }
