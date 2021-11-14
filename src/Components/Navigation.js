@@ -13,8 +13,7 @@ function Navigation(props) {
       try {
         let response = await mySky.getJSON(
           dataDomain + "/yaps.json");
-        let skylinks = response.data.skylinks;
-        console.log(response, skylinks);
+        let skylinks = JSON.parse(response.data.skylinks);
         let newSkylinks = [];
         skylinks.forEach(async (element) => {
           newSkylinks.push(await client.getSkylinkUrl(element));

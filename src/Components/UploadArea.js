@@ -31,14 +31,14 @@ function UploadArea(props) {
                         dataDomain + "/yaps.json").data.skylinks;
                     await mySky.setJSON(
                         dataDomain + "/yaps.json",
-                        {skylinks: [...skylinks, tempSkyLink]}
+                        {skylinks: JSON.stringify([...skylinks, tempSkyLink])}
                     );
                 }
                 catch (error) {
                     console.log(error);
                     await mySky.setJSON(
                         dataDomain + "/yaps.json",
-                        {skylinks: [tempSkyLink]}
+                        {skylinks: JSON.stringify([tempSkyLink])}
                     );
                 }
             }
