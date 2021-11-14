@@ -11,14 +11,18 @@ function Navigation(props) {
   useEffect(() => {
     async function stuff() {
       try {
-        let response = await mySky.getJSON(
-          dataDomain + "/yaps.json");
-        let skylinks = JSON.parse(response.data.skylinks);
-        let newSkylinks = [];
-        skylinks.forEach(async (element) => {
-          newSkylinks.push(await client.getSkylinkUrl(element));
-        });
-        setLocalSkyLinks(newSkylinks);
+        if (mySky) {
+          if (await mySky.checkLogin()) {
+            let response = await mySky.getJSON(
+              dataDomain + "/yaps.json");
+            let skylinks = JSON.parse(response.data.skylinks);
+            let newSkylinks = [];
+            skylinks.forEach(async (element) => {
+              newSkylinks.push(await client.getSkylinkUrl(element));
+            });
+            setLocalSkyLinks(newSkylinks);
+          }
+        }
       }
       catch (error) {
         console.log(error);

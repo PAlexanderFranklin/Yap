@@ -6,19 +6,13 @@ import { useContext, useEffect, useState } from 'react';
 function SkynetButtons() {
 
     const { mySky } = useContext(SkynetContext);
-    const [ loginButton, setloginButton ] = useState("");
+    const [ loginButton, setloginButton ] = useState(false);
 
     useEffect(() => {
         async function stuff() {
             try {
-                if (!await mySky.checkLogin()) {
-                    setloginButton(
-                        <button onClick={mySky.requestLoginAccess}
-                            className="login_to_mysky"
-                        >
-                            Login to mySky
-                        </button>
-                    )
+                if (mySky) {
+                    setloginButton(!await mySky.checkLogin());
                 }
             }
             catch (error) {
@@ -30,7 +24,14 @@ function SkynetButtons() {
 
     return (
         <div className="SkynetButtons">
-            {loginButton}
+            { loginButton ?
+                <button onClick={mySky.requestLoginAccess}
+                    className="login_to_mysky"
+                >
+                    Login to mySky
+                </button>
+                : ""
+            }
             <a
             target="_blank"
             href="https://homescreen.hns.siasky.net/#/skylink/AQCrn58EwIKUsZ94r9bXOGauv-KapM77N1wT62jYAXWovw"
