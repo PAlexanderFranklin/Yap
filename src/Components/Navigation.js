@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './Navigation.css';
 import { SkynetContext } from '../state/SkynetContext';
 import Item from './Navigation/Item';
@@ -7,6 +7,7 @@ function Navigation(props) {
 
   const { localSkyLinks, setLocalSkyLinks } = props;
   const { client, mySky, dataDomain } = useContext(SkynetContext);
+  const { reload, setReload } = useState(false);
 
   useEffect(() => {
     async function stuff() {
@@ -25,7 +26,7 @@ function Navigation(props) {
       }
     }
     stuff();
-  }, [client, dataDomain, mySky, setLocalSkyLinks])
+  }, [client, dataDomain, mySky, setLocalSkyLinks, reload])
 
   let itemArray = "";
   try {
@@ -41,6 +42,9 @@ function Navigation(props) {
     <div className="Navigation">
       <div className="items">
         {itemArray}
+        <button className="reload" onClick={() => {setReload(!reload)}}>
+          Load audio from mySky
+        </button>
       </div>
     </div>
   );
