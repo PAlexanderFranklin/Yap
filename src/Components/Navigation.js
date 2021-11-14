@@ -11,8 +11,9 @@ function Navigation(props) {
   useEffect(() => {
     async function stuff() {
       try {
-        let skylinks = await mySky.getJSON(
-          dataDomain + "/yaps.json").data.skylinks;
+        let response = await mySky.getJSON(
+          dataDomain + "/yaps.json");
+        let skylinks = response.data.skylinks;
         let newSkylinks = [];
         skylinks.forEach(async (element) => {
           newSkylinks.push(await client.getSkylinkUrl(element));
