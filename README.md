@@ -4,3 +4,5 @@
 
 This skapp allows you to record audio and share it with your friends.
 If you are logged into MySky, it will save your recordings for later.
+
+Try it here: https://040an7sv0j08555hjtsavlmn71jatfv2jaictupnbg9umq6o05qqhfo.siasky.net/
