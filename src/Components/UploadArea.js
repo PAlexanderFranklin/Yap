@@ -6,7 +6,10 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function UploadArea(props) {
 
-    const { blob, blobURL, uploaded, setUploaded, localSkyLinks, setLocalSkyLinks } = props;
+    const { blob, blobURL,
+        uploaded, setUploaded,
+        localSkyLinks, setLocalSkyLinks,
+        fileName, setFileName } = props;
     const [ skyLinkURL, setSkyLinkURL ] = useState("");
     const [ uploading, setUploading ] = useState(false);
 
@@ -15,10 +18,14 @@ function UploadArea(props) {
     async function upload() {
         try {
             setUploading(true);
-            const fileName = new Date();
+            let tempFileName = fileName;
+            if (tempFileName === "") {
+                tempFileName = new Date().toLocaleString();
+                setFileName(tempFileName);
+            }
             const audioFile = new File(
                 [blob],
-                fileName.toLocaleString() + ".mp3",
+                tempFileName + ".mp3",
                 {type: blob.type}
             );
             let response = await client.uploadFile(audioFile);
@@ -57,15 +64,25 @@ function UploadArea(props) {
             <audio src={blobURL}
                 controls="controls"
             />
-            { !uploaded ? (uploading ?
-                <button className="UploadButton">
-                    Uploading
-                </button>
+            { uploading || uploaded ?
+                <h3>{fileName}</h3>
                 :
-                <button className="UploadButton" onClick={upload}>
-                    Upload
-                </button>)
-                : <div className="success">
+                <input
+                    type="text"
+                    placeholder="(optional) Name recording"
+                    onChange={(event) => {setFileName(event.target.value)}}
+                />
+            }
+            { !uploaded ? (uploading ?
+                    <button className="UploadButton">
+                        Uploading
+                    </button>
+                    :
+                    <button className="UploadButton" onClick={upload}>
+                        Upload
+                    </button>
+                ) : 
+                <div className="success">
                     <CopyToClipboard text={skyLinkURL}>
                         <p className="UploadButton">Copy link</p>
                     </CopyToClipboard>

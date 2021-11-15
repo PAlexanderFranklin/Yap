@@ -12,6 +12,7 @@ function App() {
   const [blobURL, setBlobURL] = useState("");
   const [uploaded, setUploaded] = useState(false);
   const [localSkyLinks, setLocalSkyLinks] = useState([]);
+  const [fileName, setFileName] = useState("");
 
   navigator.mediaDevices.getUserMedia({ audio: true },
     () => {},
@@ -36,6 +37,7 @@ function App() {
                 console.log(error);
               }
               setUploaded(false);
+              setFileName("");
             }}
             onRecordingError={(err) => {
               console.log("recording error", err)
@@ -50,6 +52,8 @@ function App() {
             setUploaded={setUploaded}
             localSkyLinks={localSkyLinks}
             setLocalSkyLinks={setLocalSkyLinks}
+            fileName={fileName}
+            setFileName={setFileName}
           /> : ""}
         <SkynetButtons/>
       </div>
