@@ -23,7 +23,7 @@ function App() {
     <div className="App">
       <div className="content">
       <img src={yapLogo} alt="Yap Logo" className="logo" />
-        <p>
+        <p className="instructions">
           Tap and hold below to record.
         </p>
         <div className="recorder_container">

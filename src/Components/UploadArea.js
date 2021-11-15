@@ -66,9 +66,8 @@ function UploadArea(props) {
                     Upload
                 </button>)
                 : <div className="success">
-                    Your recording is uploaded at the link below. Click to copy.
                     <CopyToClipboard text={skyLinkURL}>
-                        <textarea defaultValue={skyLinkURL} readOnly={true} />
+                        <p className="UploadButton">Copy link</p>
                     </CopyToClipboard>
                 </div>
             }

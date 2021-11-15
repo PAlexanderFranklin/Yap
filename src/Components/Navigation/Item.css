@@ -1,7 +1,7 @@
 .Item {
     margin: 0.5rem;
-}
-
-.Item audio {
-    margin-right: 2rem;
+    padding: 0.5rem;
+    border: 2px solid darkgrey;
+    border-radius: 0.5rem;
+    background-color: rgb(243, 243, 243);
 }

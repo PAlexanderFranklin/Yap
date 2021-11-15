@@ -9,7 +9,7 @@ function Item(props) {
     <div className="Item">
       <audio src={skylink} controls="controls" preload="metadata" />
       <CopyToClipboard text={skylink}>
-        <textarea defaultValue={skylink} readOnly={true} />
+        <p className="UploadButton saved_item">Copy link</p>
       </CopyToClipboard>
     </div>
   );

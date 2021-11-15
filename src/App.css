@@ -13,11 +13,12 @@
     margin-bottom: 2rem;
     width: 20rem;
     align-items: center;
-    background-color: lightgray;
+    background-color: rgb(230, 230, 230);
+    border: 2px solid darkgrey;
     border-radius: 1rem;
 }
 
-p {
+.instructions {
     display: flex;
     flex-direction: column;
     justify-content: center;
