@@ -71,6 +71,7 @@ function UploadArea(props) {
                     type="text"
                     placeholder="(optional) Name recording"
                     onChange={(event) => {setFileName(event.target.value)}}
+                    className="name_file"
                 />
             }
             { !uploaded ? (uploading ?
