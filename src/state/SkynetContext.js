@@ -60,23 +60,9 @@ const SkynetProvider = ({ children }) => {
       }
     }
 
-    async function checkMySkyLogin() {
-      try {
-        const checkingLogin = await skynetState.mySky.checkLogin();
-        if (checkingLogin !== skynetState.loggedIn) {
-          setSkynetState({ ...skynetState, loggedIn: checkingLogin });
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
     // call async setup function
     if (!skynetState.mySky) {
       initMySky();
-    }
-    else {
-      checkMySkyLogin();
     }
 
     return () => {
@@ -85,6 +71,14 @@ const SkynetProvider = ({ children }) => {
       }
     };
   }, [skynetState]);
+
+  // const logout = React.useCallback(() => {
+  //   if (state.mySky) {
+  //     state.mySky.logout();
+
+  //     setState((state) => ({ ...state, user: null }));
+  //   }
+  // }, [state]);
 
   return (
     <SkynetContext.Provider value={skynetState}>

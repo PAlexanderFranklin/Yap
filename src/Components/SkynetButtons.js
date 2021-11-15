@@ -1,15 +1,15 @@
 import './SkynetButtons.css';
 import AddToHomescreen from '../images/AddToHomescreen.svg';
-import { SkynetContext } from '../state/SkynetContext';
-import { useContext } from 'react';
+// import { SkynetContext } from '../state/SkynetContext';
+// import { useContext } from 'react';
 
 function SkynetButtons() {
 
-    const { mySky, loggedIn } = useContext(SkynetContext);
+    // const { mySky, loggedIn } = useContext(SkynetContext);
 
     return (
         <div className="SkynetButtons">
-            { loggedIn ?
+            {/* { loggedIn ?
                 <button onClick={() => {
                     try {
                         mySky.logout();
@@ -31,7 +31,7 @@ function SkynetButtons() {
                 >
                     Login to mySky
                 </button>
-            }
+            } */}
             <a
             target="_blank"
             href="https://homescreen.hns.siasky.net/#/skylink/AQCrn58EwIKUsZ94r9bXOGauv-KapM77N1wT62jYAXWovw"
