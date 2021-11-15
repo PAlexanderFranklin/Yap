@@ -1,37 +1,36 @@
 import './SkynetButtons.css';
 import AddToHomescreen from '../images/AddToHomescreen.svg';
 import { SkynetContext } from '../state/SkynetContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
-function SkynetButtons(props) {
+function SkynetButtons() {
 
-    const { mySkyReload, setMySkyReload } = props;
-    const { mySky } = useContext(SkynetContext);
-    const [ loginButton, setloginButton ] = useState(false);
-
-    useEffect(() => {
-        async function stuff() {
-            try {
-                if (mySky) {
-                    setloginButton(!await mySky.checkLogin());
-                }
-            }
-            catch (error) {
-                console.log(error);
-            }
-        }
-        stuff()
-    }, [mySky, mySkyReload])
+    const { mySky, loggedIn } = useContext(SkynetContext);
 
     return (
         <div className="SkynetButtons">
-            { loginButton ?
-                <button onClick={() => {mySky.requestLoginAccess().then(setMySkyReload(!mySkyReload));}}
+            { loggedIn ?
+                <button onClick={() => {
+                    try {
+                        mySky.logout();
+                    } catch (error) {
+                        console.log(error);
+                    }}}
+                    className="login_to_mysky"
+                >
+                    Logout of mySky
+                </button>
+                :
+                <button onClick={() => {
+                    try {
+                        mySky.requestLoginAccess();
+                    } catch (error) {
+                        console.log(error);
+                    }}}
                     className="login_to_mysky"
                 >
                     Login to mySky
                 </button>
-                : ""
             }
             <a
             target="_blank"

@@ -33,6 +33,7 @@ const SkynetProvider = ({ children }) => {
     userProfile,
     dataDomain,
     fileSystem,
+    loggedIn: false,
   });
 
   useEffect(() => {
@@ -59,9 +60,23 @@ const SkynetProvider = ({ children }) => {
       }
     }
 
+    async function checkMySkyLogin() {
+      try {
+        const checkingLogin = await skynetState.mySky.checkLogin();
+        if (checkingLogin !== skynetState.loggedIn) {
+          setSkynetState({ ...skynetState, loggedIn: checkingLogin });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
     // call async setup function
     if (!skynetState.mySky) {
       initMySky();
+    }
+    else {
+      checkMySkyLogin();
     }
 
     return () => {

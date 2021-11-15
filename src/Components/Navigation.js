@@ -5,7 +5,7 @@ import Item from './Navigation/Item';
 
 function Navigation(props) {
 
-  const { mySkyReload, localSkyLinks, setLocalSkyLinks } = props;
+  const { localSkyLinks, setLocalSkyLinks } = props;
   const { client, mySky, dataDomain } = useContext(SkynetContext);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function Navigation(props) {
       }
     };
     stuff()
-  }, [client, dataDomain, mySky, setLocalSkyLinks, mySkyReload])
+  }, [client, dataDomain, mySky, setLocalSkyLinks])
 
   const [ itemArray, setItemArray ] = useState([]);
   useEffect(() => {
