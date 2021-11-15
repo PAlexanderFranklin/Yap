@@ -61,6 +61,15 @@ function App() {
         localSkyLinks={localSkyLinks}
         setLocalSkyLinks={setLocalSkyLinks}
       />
+      <p className="plug">
+        Skapp created by Alexander Franklin.
+        Source code available at <a
+          href="https://github.com/PAlexanderFranklin/Yap"
+          className="github_link"
+          >
+            Github
+          </a>
+      </p>
     </div>
   );
 }

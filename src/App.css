@@ -37,3 +37,26 @@
     height: 7rem;
     width: 100%;
 }
+
+.plug {
+    background-color: rgb(230, 230, 230);
+    padding: 0.5rem;
+    border: 2px solid darkgrey;
+    border-radius: 0.5rem;
+}
+
+.github_link {
+    margin-left: 0.25rem;
+    padding: 0.08rem;
+    font-weight: 400;
+    text-decoration: none;
+    color: black;
+    border-radius: 0.05rem;
+    background-color: #6ac174;
+    box-shadow: 1px 1px 4px 2px rgba(1, 1, 1, 0.8);
+}
+
+.github_link:active {
+    background-color: #5eaa66;
+    box-shadow: 0 0 2px 1px rgba(1, 1, 1, 0.8);
+}
