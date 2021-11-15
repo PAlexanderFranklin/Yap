@@ -57,11 +57,11 @@ function App() {
           setMySkyReload={setMySkyReload}
         />
       </div>
-        <Navigation
-          mySkyReload={mySkyReload}
-          localSkyLinks={localSkyLinks}
-          setLocalSkyLinks={setLocalSkyLinks}
-        />
+      <Navigation
+        mySkyReload={mySkyReload}
+        localSkyLinks={localSkyLinks}
+        setLocalSkyLinks={setLocalSkyLinks}
+      />
     </div>
   );
 }

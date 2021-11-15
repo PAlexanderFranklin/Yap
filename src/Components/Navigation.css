@@ -2,9 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 15rem;
     min-width: 100%;
     background-color: rgb(230, 230, 230);
     border-top: 2px solid darkgrey;
+    border-bottom: 2px solid darkgrey;
 }
 
 .items {
