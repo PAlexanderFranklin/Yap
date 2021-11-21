@@ -11,7 +11,7 @@
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
-    "react-mp3-recorder": "^1.1.2",
+    "react-mp3-recorder": "git@github.com:codingyourlife/react-mp3-recorder.git",
     "react-scripts": "4.0.3",
     "skynet-js": "^4.0.18-beta",
     "web-vitals": "^1.1.2"
