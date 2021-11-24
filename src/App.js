@@ -65,9 +65,17 @@ function App() {
         Skapp created by Alexander Franklin.
         Source code available at <a
           href="https://github.com/PAlexanderFranklin/Yap"
-          className="github_link"
+          className="plug_link"
           >
             Github
+          </a>
+      </p>
+      <p className="plug">
+        Learn all about <a
+          href="https://support.siasky.net"
+          className="plug_link"
+          >
+            Skynet
           </a>
       </p>
     </div>
