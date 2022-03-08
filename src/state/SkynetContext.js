@@ -11,7 +11,7 @@ const SkynetContext = createContext(undefined);
 // We'll define a portal to allow for developing on localhost.
 // When hosted on a skynet portal, SkynetClient doesn't need any arguments.
 const portal =
-  window.location.hostname === 'localhost' ? 'https://siasky.net' : undefined;
+  window.location.hostname === 'localhost' ? 'https://fileportal.org' : undefined;
 
 // Initiate the SkynetClient
 const client = new SkynetClient(portal);
@@ -22,8 +22,7 @@ const contentRecord = null;
 const userProfile = null;
 const fileSystem = null;
 
-const dataDomain =
-  window.location.hostname === 'localhost' ? 'localhost' : '040an7sv0j08555hjtsavlmn71jatfv2jaictupnbg9umq6o05qqhfo';
+const dataDomain = 'yasp.hns';
 
 const SkynetProvider = ({ children }) => {
   const [skynetState, setSkynetState] = useState({
@@ -34,6 +33,7 @@ const SkynetProvider = ({ children }) => {
     dataDomain,
     fileSystem,
     loggedIn: false,
+    userID: null,
   });
 
   useEffect(() => {
@@ -53,8 +53,38 @@ const SkynetProvider = ({ children }) => {
         // await mySky.loadDacs(userProfile);
         // await mySky.loadDacs(fileSystem);
 
+        // check if user is already logged in with permissions
+        const loggedIn = await mySky.checkLogin();
+        let userID = null;
+        if (loggedIn) {
+          userID = await mySky.userID();
+        }
+
+        // logIn and logOut are in this file so that they can access setSkynetState
+        async function logIn() {
+          console.log(mySky)
+          const status = await mySky.requestLoginAccess();
+          let userID = null;
+          if (status) {
+            userID = await mySky.userID();
+          }
+          setSkynetState(s => ({...s, loggedIn: status, userID: userID}))
+        }
+
+        async function logOut() {
+          console.log(mySky)
+          await mySky.logout();
+          setSkynetState(s => ({...s, loggedIn: false, userID: null}))
+        } 
+
         // replace mySky in state object
-        setSkynetState({ ...skynetState, mySky });
+        setSkynetState({...skynetState,
+          mySky: mySky,
+          loggedIn: loggedIn,
+          userID: userID,
+          logIn: logIn,
+          logOut: logOut,
+        });
       } catch (e) {
         console.error(e);
       }
@@ -71,14 +101,6 @@ const SkynetProvider = ({ children }) => {
       }
     };
   }, [skynetState]);
-
-  // const logout = React.useCallback(() => {
-  //   if (state.mySky) {
-  //     state.mySky.logout();
-
-  //     setState((state) => ({ ...state, user: null }));
-  //   }
-  // }, [state]);
 
   return (
     <SkynetContext.Provider value={skynetState}>
