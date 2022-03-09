@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { SkynetClient } from 'skynet-js';
 
 // To import DAC, uncomment here, and 2 spots below.
@@ -16,94 +16,80 @@ const portal =
 // Initiate the SkynetClient
 const client = new SkynetClient(portal);
 
-// For now, we won't use any DACs -- uncomment to create
-// const contentRecord = new ContentRecordDAC();
-const contentRecord = null;
-const userProfile = null;
-const fileSystem = null;
-
 const dataDomain = 'yasp.hns';
 
 const SkynetProvider = ({ children }) => {
-  const [skynetState, setSkynetState] = useState({
+  const [state, setState] = useState({
     client,
     mySky: null,
-    contentRecord,
-    userProfile,
+    mySkyInitialising: false,
+    authenticating: false,
+    user: null,
     dataDomain,
-    fileSystem,
-    loggedIn: false,
-    userID: null,
   });
 
   useEffect(() => {
-    // define async setup function
-    async function initMySky() {
+    const execute = async () => {
+      setState((state) => ({ ...state, mySkyInitialising: true }));
+
+      // initialize MySky
+      const mySky = await client.loadMySky(dataDomain);
+
       try {
-        // load invisible iframe and define app's data domain
-        // needed for permissions write
-        const mySky = await client.loadMySky(dataDomain, {
-        //   debug: false,
-        //   dev: false,
-        });
+        const isAuthenticated = await mySky.checkLogin();
 
-        // load necessary DACs and permissions
-        // Uncomment line below to load DACs
-        // await mySky.loadDacs(contentRecord);
-        // await mySky.loadDacs(userProfile);
-        // await mySky.loadDacs(fileSystem);
+        if (isAuthenticated) {
+          setState((state) => ({ ...state, authenticating: true }));
 
-        // check if user is already logged in with permissions
-        const loggedIn = await mySky.checkLogin();
-        let userID = null;
-        if (loggedIn) {
-          userID = await mySky.userID();
+          const user = await mySky.userID();
+
+          setState((state) => ({ ...state, user, mySky, mySkyInitialising: false, authenticating: false }));
+        } else {
+          setState((state) => ({ ...state, mySky, mySkyInitialising: false }));
         }
-
-        // logIn and logOut are in this file so that they can access setSkynetState
-        async function logIn() {
-          console.log(mySky)
-          const status = await mySky.requestLoginAccess();
-          let userID = null;
-          if (status) {
-            userID = await mySky.userID();
-          }
-          setSkynetState(s => ({...s, loggedIn: status, userID: userID}))
-        }
-
-        async function logOut() {
-          console.log(mySky)
-          await mySky.logout();
-          setSkynetState(s => ({...s, loggedIn: false, userID: null}))
-        } 
-
-        // replace mySky in state object
-        setSkynetState({...skynetState,
-          mySky: mySky,
-          loggedIn: loggedIn,
-          userID: userID,
-          logIn: logIn,
-          logOut: logOut,
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    // call async setup function
-    if (!skynetState.mySky) {
-      initMySky();
-    }
-
-    return () => {
-      if (skynetState.mySky) {
-        skynetState.mySky.destroy();
+      } catch {
+        setState((state) => ({ ...state, mySky, mySkyInitialising: false, authenticating: false }));
       }
     };
-  }, [skynetState]);
+
+    if (!state.mySky && !state.mySkyInitialising) {
+      execute();
+    }
+  }, [state]);
+
+  const authenticate = useCallback(() => {
+    const execute = async () => {
+      const success = await state.mySky.requestLoginAccess();
+
+      if (success) {
+        const user = await state.mySky.userID();
+
+        setState((state) => ({ ...state, user, authenticating: false }));
+      } else {
+        setState((state) => ({ ...state, authenticating: false }));
+      }
+    };
+
+    if (state.mySky && !state.authenticating) {
+      setState((state) => ({ ...state, authenticating: true }));
+      execute();
+    }
+  }, [state]);
+
+  const logout = useCallback(() => {
+    if (state.mySky) {
+      state.mySky.logout();
+
+      setState((state) => ({ ...state, user: null }));
+    }
+  }, [state]);
+
+  const stateContext = useMemo(() => {
+    return { ...state, authenticate, logout };
+  }, [state, authenticate, logout]);
 
   return (
-    <SkynetContext.Provider value={skynetState}>
+    <SkynetContext.Provider value={stateContext}>
       {children}
     </SkynetContext.Provider>
   );

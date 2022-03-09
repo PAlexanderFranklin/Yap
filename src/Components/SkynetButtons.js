@@ -5,33 +5,33 @@ import { useContext } from 'react';
 
 function SkynetButtons() {
 
-    const { loggedIn, logIn, logOut } = useContext(SkynetContext);
+    const { user, authenticate, authenticating, logout } = useContext(SkynetContext);
 
     return (
         <div className="SkynetButtons">
-            { loggedIn ?
-                <button onClick={() => {
-                    try {
-                        logOut();
-                    } catch (error) {
-                        console.log(error);
-                    }}}
-                    className="login_to_mysky"
-                >
-                    Logout of mySky
-                </button>
-                :
-                <button onClick={() => {
-                    try {
-                        logIn();
-                    } catch (error) {
-                        console.log(error);
-                    }}}
-                    className="login_to_mysky"
-                >
-                    Login to mySky
-                </button>
-            }
+            {/* not logged in */}
+            {!authenticating && !user && (
+            <button className="login_to_mysky" onClick={() => authenticate()}>
+                Authenticate with MySky
+            </button>
+            )}
+    
+            {/* logging in */}
+            {authenticating && (
+            <button className="login_to_mysky" disabled={true}>
+                Waiting for authentication
+            </button>
+            )}
+    
+            {/* logged in */}
+            {!authenticating && user && (
+            <button
+                className="login_to_mysky"
+                onClick={logout}
+            >
+                Sign out from MySky
+            </button>
+            )}
             <a
             target="_blank"
             href="https://homescreen.hns.siasky.net/#/skylink/AQCrn58EwIKUsZ94r9bXOGauv-KapM77N1wT62jYAXWovw"
