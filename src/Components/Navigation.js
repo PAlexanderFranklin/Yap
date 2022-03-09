@@ -6,30 +6,31 @@ import Item from './Navigation/Item';
 function Navigation(props) {
 
   const { localSkyLinks, setLocalSkyLinks } = props;
-  const { client, mySky, dataDomain } = useContext(SkynetContext);
+  const { client, mySky, dataDomain, user } = useContext(SkynetContext);
 
   useEffect(() => {
-    async function stuff() {
+    async function execute() {
       try {
-        if (mySky) {
-          if (await mySky.checkLogin()) {
-            let response = await mySky.getJSON(
-              dataDomain + "/yaps.json");
-            let skylinks = JSON.parse(response.data.skylinks);
-            let newSkylinks = [];
-            skylinks.forEach(async (element) => {
-              newSkylinks.push(await client.getSkylinkUrl(element));
-            });
-            setLocalSkyLinks(newSkylinks);
-          }
+        if (mySky && user) {
+          let response = await mySky.getJSON(
+            dataDomain + "/yaps.json");
+          let skylinks = JSON.parse(response.data.skylinks);
+          let newSkylinks = [];
+          skylinks.forEach(async (element) => {
+            newSkylinks.push(await client.getSkylinkUrl(element));
+          });
+          setLocalSkyLinks(newSkylinks);
+        }
+        else {
+          setLocalSkyLinks([]);
         }
       }
       catch (error) {
         console.log(error);
       }
     };
-    stuff()
-  }, [client, dataDomain, mySky, setLocalSkyLinks])
+    execute()
+  }, [client, dataDomain, mySky, user, setLocalSkyLinks])
 
   const [ itemArray, setItemArray ] = useState([]);
   useEffect(() => {

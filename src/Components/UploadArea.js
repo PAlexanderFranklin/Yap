@@ -13,7 +13,7 @@ function UploadArea(props) {
     const [ skyLinkURL, setSkyLinkURL ] = useState("");
     const [ uploading, setUploading ] = useState(false);
 
-    const { client, mySky, dataDomain } = useContext(SkynetContext);
+    const { client, mySky, dataDomain, user } = useContext(SkynetContext);
     
     async function upload() {
         try {
@@ -35,7 +35,7 @@ function UploadArea(props) {
             setUploaded(true);
             setUploading(false);
             setLocalSkyLinks([...localSkyLinks, tempSkyLinkURL]);
-            if (await mySky.checkLogin()) {
+            if (user) {
                 try {
                     let response = await mySky.getJSON(
                         dataDomain + "/yaps.json");
